@@ -7,6 +7,8 @@ import path from 'path';
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static('public'));
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -36,11 +38,20 @@ app.post('/upload', upload.single('image'), (req, res) => {
     db.query(sql, [image], (err, result) => {
         if (err) {
             console.error(err);
-            return res.json({ Message: "Error" });
+            return res.json({Message: "Error"});
         }
-        return res.json({ Status: "Success" });
+        return res.json({Status: "Success"});
     });
 });
+
+app.get('/', (req, res) => {
+    const sql = 'select * from uploadimages';
+
+    db.query(sql, (err, result) => {
+        if (err) return res.json('Error');
+        return res.json(result);
+    })
+})
 
 
 app.listen(8081, () => {
