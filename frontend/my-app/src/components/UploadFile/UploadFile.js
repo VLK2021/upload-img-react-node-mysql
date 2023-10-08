@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import './UploadFileStyle.css';
-import axios from "axios";
+import {imageService} from "../../services";
 
 
 const UploadFile = () => {
@@ -15,24 +15,15 @@ const UploadFile = () => {
         const formData = new FormData();
         formData.append('image', file);
 
-        axios.post('http://localhost:8081/upload', formData)
-            .then(res => {
-                if (res.data.Status === "Success") {
-                    console.log("Success");
-                } else {
-                    console.log("Failed");
-                }
-            })
+        imageService.upload(formData)
             .catch(err => console.log(err));
     }
-
 
 
     return (
         <div className={'uploadFile'}>
             <input type="file" onChange={handleFile}/>
             <button onClick={handleUpload}>upload</button>
-
         </div>
     );
 };
