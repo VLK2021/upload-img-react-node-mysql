@@ -1,11 +1,12 @@
 import './App.css';
+import UploadFile from "./components/UploadFile/UploadFile";
 
 
 function App() {
 
     return (
         <div className="app">
-            APP
+            <UploadFile/>
         </div>
     );
 }
